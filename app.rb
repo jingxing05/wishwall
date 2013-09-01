@@ -1,8 +1,17 @@
 # coding:utf-8
 require 'sinatra'
-require 'data_mapper'
-require 'erb'
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+require 'bundler'
+Bundler.require
+if ENV['VCAP_SERVICES'].nil?
+    DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+else
+    require 'json'
+    svcs = JSON.parse ENV['VCAP_SERVICES']
+    mysql = svcs.detect { |k,v| k =~ /^mysql/ }.last.first
+    creds = mysql['credentials']
+    user, pass, host, name = %w(user password host name).map { |key| creds[key] }
+    DataMapper.setup(:default, "mysql://#{user}:#{pass}@#{host}/#{name}")
+end
 
 class Topic
     include DataMapper::Resource
