@@ -1,0 +1,15 @@
+body {
+  position: relative; /* For scrollyspy */
+  padding-top: 60px; /* Account for fixed navbar */
+  font-family: "微软雅黑";
+}
+.navbar-brand {
+
+    font-size:38px;
+    padding: 2px 25px 1px 15px;
+}
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+

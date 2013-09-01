@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>大声说出你的祝福吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"> 
+    <meta name="description" content="祝福墙，许愿墙">
+    <meta name="keywords" content="祝福墙，许愿墙">
+    <meta name="author" content="曾庆峰">
+    <link rel="shortcut icon" href="img/favicon.ico"> 
+    <!-- Bootstrap -->
+    <link href="css/bootstrap_ubuntu.min.css" rel="stylesheet" media="screen">
+    <link href="css/site.css" rel="stylesheet" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span> 祝福许愿墙</a>
+          
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right"> 
+              <li><button type="button" data-toggle="modal" data-target="#makewish" class="btn btn-warning navbar-btn ">写祝福</button></li>
+              <li><a href="#" data-toggle="modal" data-target="#aboutsite">关于本站</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+   
+    <div class="container">
+      <div class="row" id="container"> 
+        <% @wishes.each do | awish | %>
+        <div class="col-lg-4 item" id="<%=awish.id%>">
+            <%  csscls = ['default','primary','success','info','warning','danger']   %>
+            <div class="panel panel-<%=csscls.sample%>">
+                <div class="panel-heading"><strong><%=awish.from%></strong>&nbsp;对&nbsp;<strong><%=awish.to%></strong>&nbsp;说:</div>
+                <div class="panel-body" style="word-warp:break-word;word-break:break-all" >
+                   <%=awish.wish%>&nbsp;(于<%=awish.mtime%>)  
+                </div>
+            </div>
+        </div>  
+        <% end %> 
+      </div> 
+    </div> <!-- /container -->
+  
+    <div id="loading" class="navbar" style="display:none;">
+         <span class="loading">加载中，请稍后...</span>
+    </div>
+    <div class="navbar navbar-inverse">
+      <div class="container">
+        <p class="navbar-text">By
+        <a href="http://my.oschina.net/jingxing05/blog" target="_blank" class="navbar-link"><strong>qingfeng</strong></a> 
+        and <a href="http://v3.bootcss.com/" target="_blank" class="navbar-link">Bootstrap3</a> 
+        </p>
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    <div class="modal fade" id="makewish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header panel panel-success">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">送出我真挚的祝福</h4>
+          </div>
+          <div class="modal-body">
+            <form id="wishform" role="form" class="form-horizontal" onsubmit="makewish()">
+                <div class="form-group">
+                    <label for="wishfrom" class="col-lg-2 control-label">我叫</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="wishfrom" placeholder="可填昵称" required="required" maxlength="9">
+                    </div>
+                    
+                    <label for="wishto" class="col-lg-2 control-label">想对TA</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="wishto" placeholder="可填昵称"  required="required" maxlength="9">
+                    </div> 
+                </div> 
+                <div class="form-group">
+                    <label for="wishcontent" class="col-lg-2 control-label">说</label> 
+                    <div class="col-lg-10">
+                        <textarea id="wishcontent" class="form-control" style="resize: none;" placeholder="不多于140字." rows="5"  required="required"maxlength="140"></textarea> 
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <input type="submit" class="btn btn-primary" value="发表">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">再想想</button> 
+                    </div>
+                </div> 
+            </form>
+            
+          </div> 
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="aboutsite" tabindex="-1" role="dialog" aria-labelledby="aboutsiteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="aboutsiteLabel">关于本站</h4>
+          </div>
+          <div class="modal-body">
+             <div class="jumbotron">
+                  <div class="container">
+                    <h2>Sinatra小应用</h2>
+                    <p>这是一个Sinatra小应用，祝福墙，许愿墙</p>
+                    <p>文明发言你我Ta！</p>
+                  </div>
+            </div>
+          </div> 
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery1.10.2.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/waterfall.js"></script>
+    <script>
+    function makewish(){
+        $.post(
+            "/",
+            {
+              wishfrom:$('#wishfrom').val(),
+              wishto:$('#wishto').val(),
+              wishcontent:$('#wishcontent').val()
+            },
+            function (retdata){
+                if('true' == retdata){
+                    //刷新页面 
+                    location.reload();
+                    $('#wishform')[0].reset();
+                }else{
+                    alert('输入有误')
+                }
+            }
+       );
+    }
+     
+
+$(function(){
+var $container = $('#containerPic'),sTimer;
+$container.imagesLoaded(function(){
+$container.masonry({
+itemSelector: '.itemPic',
+columnWidth: 200
+});
+});
+$(window).scroll(function scrollHandler(){
+clearTimeout(sTimer);
+sTimer = setTimeout(function() {
+if(window.loaded == 1){$(window).unbind("scroll", scrollHandler);}
+var c=document.documentElement.clientHeight || document.body.clientHeight, t=$(document).scrollTop();
+if(t+c >= $container.offset().top+$container.height()){loadMore();}
+}, 100);
+});
+var jLoading = $('#loading');
+function loadMore()
+{
+var html="<div class='itemPic'><div class='pic'><img src='images/1.jpg' height='187' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/2.jpg' height='378' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/3.jpg' height='393' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/4.jpg' height='276' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/5.jpg' height='435' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/6.jpg' height='387' /></div></div>";
+html+="<div class='itemPic'><div class='pic'><img src='images/7.jpg' height='387' /></div></div>";
+$container.append(html).masonry("reload");
+jLoading.hide();
+}
+
+
+});
+
+    </script>
+     
+  </body>
+</html>
